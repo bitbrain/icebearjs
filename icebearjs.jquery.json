@@ -1,7 +1,7 @@
 {
     "name": "icebearjs",
     "title": "IcebearJS",
-    "description": "jQuery plugin for providing dev based UI elements",
+    "description": "jQuery plugin which provides a development progress bar",
     "keywords": [
         "icebear",
         "ui",
@@ -22,13 +22,13 @@
     "licenses": [
         {
             "type": "GPL2",
-            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+            "url": "https://github.com/MyRealityCoding/icebearjs/LICENCE"
         }
     ],
     "bugs": "https://github.com/MyRealityCoding/icebearjs/issues",
     "homepage": "http://icebearjs.my-reality.de",
     "docs": "https://github.com/MyRealityCoding/icebearjs#getting-started",
-    "download": "https://github.com/MyRealityCoding/icebearjs/archive/master.zip",
+    "download": "https://github.com/MyRealityCoding/icebearjs/releases",
     "dependencies": {
         "jquery": ">=1.5"
     }

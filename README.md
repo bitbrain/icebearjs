@@ -1,6 +1,6 @@
 ![icebearJS](icebearjs-head.png)
 
-A lightweight jQuery plugin collection.
+A lightweight jQuery plugin which shows development progress.
 
 Getting started
 ===
@@ -11,16 +11,11 @@ To use IcebearJS properly you have to include it. Put the following line in your
 <script type="text/javascript" src="http://icebearjs.my-reality.de/jquery.icebearjs.min.js"></script>
 ```
 
-Afterwards you can use supported IcebearJS plugins.
+Afterwards you can use supported IcebearJS.
 
-Plugins
-===
+### Example
 
-Here is a list of the currently available plugins.
-
-### .progress()
-
-This plugin generates a progress bar. Before you have to define a XML source in a repository, in the following example a basic ```meta.xml``` file:
+This plugin generates a progress bar which based on JQueryUI. Before you have to define a XML source in a repository, in the following example a basic ```meta.xml``` file:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -41,7 +36,7 @@ Afterwards you have to define an element in your HTML page which should serve as
 <div id="progress"></div>
 
 <script type="text/javascript>">
-$('#progress').progress('https://raw.github.com/MyRealityCoding/galacticum/master/res/xml/meta.xml');
+$('#progress').icebearJS('https://raw.github.com/MyRealityCoding/galacticum/master/res/xml/meta.xml');
 </script>
 ```
 
