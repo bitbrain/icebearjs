@@ -1,4 +1,3 @@
-icebearjs
-=========
+!(icebearJS)[icebearjs-logo.png]
 
-A light weight JQuery plugin collection
+A light weight JQuery plugin collection.
