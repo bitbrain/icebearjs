@@ -28,12 +28,20 @@ function initJQuery() {
 
 initJQuery();
  
-/* Plugin: .progress() */
+(function ($) {
+	
+	$.fn.icebearJS.defaults = {
+	      phase : {
+	                'dev',
+	                'alpha',
+	                'beta',
+	                'release'
+	      }, // Supported phases, can be interchanged externally
+	      
+	      animated : true
+	   };
 
-
-
-
-
+})(jQuery);
 
 
 
