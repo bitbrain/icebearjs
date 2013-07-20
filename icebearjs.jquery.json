@@ -1,0 +1,35 @@
+{
+    "name": "icebearjs",
+    "title": "IcebearJS",
+    "description": "jQuery plugin for providing dev based UI elements",
+    "keywords": [
+        "icebear",
+        "ui",
+        "development"
+    ],
+    "version": "0.0.1",
+    "author": {
+        "name": "Miguel Gonzalez",
+        "url": "http://my-reality.de/about"
+    },
+    "maintainers": [
+        {
+            "name": "Miguel Gonzalez",
+            "email": "miguel-gonzalez@gmx.de",
+            "url": "http://my-reality.de"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "GPL2",
+            "url": "http://www.gnu.org/licenses/gpl-2.0.html"
+        }
+    ],
+    "bugs": "https://github.com/MyRealityCoding/icebearjs/issues",
+    "homepage": "http://icebearjs.my-reality.de",
+    "docs": "https://github.com/MyRealityCoding/icebearjs#getting-started",
+    "download": "https://github.com/MyRealityCoding/icebearjs/archive/master.zip",
+    "dependencies": {
+        "jquery": ">=1.5"
+    }
+}
