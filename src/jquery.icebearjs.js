@@ -104,9 +104,15 @@ initJQuery();
                             display :'table-cell',
                             textAlign: 'center'
                         });
+                        
+                        oldHeight = element.height();
 
                         element.progressbar({
                             value: progress
+                        });
+                        
+                        $('.ui-progressbar-value').css({
+                            marginTop : -oldHeight
                         });
                     }
                     
