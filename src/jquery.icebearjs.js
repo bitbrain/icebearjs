@@ -81,17 +81,17 @@ initJQuery();
                     
                    
 
-                    function addElement(target, caption) {
-                        target.append('<div>' + caption + '</div>');                        
-                        target.children().each(function(){
-                            $(this).css({
-                                display :'table-cell',
-                                textAlign: 'center'
-                            });
-                            
-                            $(this).progressbar({
-                                value: 37
-                            });
+                    function addElement(target, caption, progress, cssClass) {
+                        target.append('<div class="cell ' + cssClass + '">' + caption + '</div>');
+                        
+                        element = target.find('.cell').last();
+                        element.css({
+                            display :'table-cell',
+                            textAlign: 'center'
+                        });
+
+                        element.progressbar({
+                            value: progress
                         });
                     }
 
@@ -100,9 +100,24 @@ initJQuery();
                         target.css('width', '100%');
                         row = target.html('<div></div>').find('div');
                         row.css('display', 'table-row');
+                        var pastPhase = false;
+                        
                         for (var i = 0; i < options.phaselist.length; ++i) {
                             element = options.phaselist[i];
-                            row.html(addElement(row, element));
+                            
+                            var progress = 100;
+                            var cssClass = 'reached';
+                            
+                            if (element === options.phase) {
+                                progress = parseInt(options.progress);
+                                pastPhase = true;
+                                cssClass = 'current';
+                            } else if (pastPhase) {
+                                progress = 0;
+                                cssClass = 'open';
+                            }
+                            
+                            row.html(addElement(row, element, progress, cssClass));
                         }
                     }
 
