@@ -37,21 +37,25 @@ initJQuery();
              * @param {type} options options of the method
              * @returns {undefined} this
              */
-            icebearProgress : function(datasource) {
+            icebearProgress : function(options) {
                 
-                htmlTarget = $(this);
+                var defaults = {
+                    datasource : "meta.xml",
+                    animated : true,
+                    animationType : 'easeOutBounce',
+                    duration : 2000
+                };
                 
-                // DEFAULT OPTIONS
-                options = null;
+                options = $.extend(true, {}, defaults, options);                
+                htmlTarget = $(this);                
+                animatedParts = 0;
                 
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
-                        url: datasource,
+                        url: options.datasource,
                         dataType: "xml",
                         success: function(xml) {
-                            
-                            options = new Object();
                             
                             $(xml).find('resource').each(function() {
                                 var id = $(this).attr('id');
@@ -82,15 +86,9 @@ initJQuery();
                    
 
                     function addElement(target, caption, progress, cssClass) {
-                        target.append('<div class="cell ' + cssClass + '"><span class="label">' + caption + '</span></div>');
+                        target.append('<div class="cell ' + cssClass + '"></div>');
                         
                         element = target.find('.cell').last();
-                        label = element.find('.label');
-                        
-                        label.css({
-                            verticalAlign : "middle",
-                            display : "block"
-                        });
                         
                         element.css({
                             display :'table-cell',
@@ -100,6 +98,44 @@ initJQuery();
                         element.progressbar({
                             value: progress
                         });
+                        
+                        element.append(caption);
+                    }
+                    
+                    function animateElement(data, index) {
+                        target = data[index];                        
+                        animationType = 'linear';
+                        element = target.element;
+                        duration = options.duration / animatedParts;
+                        
+                        if (element.parent().hasClass('current')) {
+                            animationType = 'easeOutBounce';
+                        }
+                        
+                        element.animate({ width : target.width}, duration, animationType, function() {
+                            if (index < data.length) {
+                                animateElement(data, ++index);
+                            }
+                        });
+                    }
+                    
+                    function animate(target) {
+                        
+                        data = new Array();
+                        index = 0;
+                        $('.ui-progressbar-value').each(function() {
+                            var val = $('.ui-progressbar-value').first();
+                            var currentWidth = $(this).width();
+                            currentWidth -= parseInt($(this).css('marginRight'));   
+                            data[index++] = {
+                                element : $(this),
+                                width : currentWidth
+                            };
+                            
+                             $(this).css('width', 0);
+                        });
+                        
+                        animateElement(data, 0);
                     }
 
                     function buildHTML(target) {
@@ -122,9 +158,12 @@ initJQuery();
                                 progress = parseInt(options.progress);
                                 pastPhase = true;
                                 cssClass = 'current';
+                                animatedParts++;
                             } else if (pastPhase) {
                                 progress = 0;
                                 cssClass = 'open';
+                            } else {
+                                animatedParts++;
                             }
                             
                             row.html(addElement(row, element, progress, cssClass));
@@ -132,7 +171,8 @@ initJQuery();
                     }
 
                     buildHTML(htmlTarget);
-
+                    animate(htmlTarget);
+                    
                     return htmlTarget;
                 });
             }
