@@ -96,7 +96,7 @@ initJQuery();
                    
 
                     function addElement(target, caption, progress, cssClass) {
-                        target.append('<div class="cell ' + cssClass + '">' + caption + '</div>');
+                        target.append('<div class="cell ' + cssClass + '"><div class="caption">' + caption + '</div></div>');
                         
                         element = target.find('.cell').last();
                         
@@ -104,15 +104,9 @@ initJQuery();
                             display :'table-cell',
                             textAlign: 'center'
                         });
-                        
-                        oldHeight = element.height();
 
                         element.progressbar({
                             value: progress
-                        });
-                        
-                        $('.ui-progressbar-value').css({
-                            marginTop : -oldHeight
                         });
                     }
                     
@@ -164,7 +158,7 @@ initJQuery();
                     function buildHTML(target) {
                         target.css({
                             display: "table",
-                            width: "100%",
+                            width: '100%',
                             tableLayout : "fixed"
                         });
                         row = target.html('<div></div>').find('div');
@@ -191,6 +185,53 @@ initJQuery();
                             
                             row.html(addElement(row, element, progress, cssClass));
                         }
+                        
+                        // Add custom CSS
+                        target.find('.cell').css({
+                           textAlign : "center" 
+                        });
+                        
+                        target.find('.ui-progressbar').css({
+                           height : "2em",
+                           textAlign : "center"
+                        }).find('.ui-progressbar-value').css({
+                           height : "100%"                           
+                        });
+                        
+                        element = target.find('.cell');
+                        caption = element.find('.caption');
+                        
+                         $('.ui-progressbar-value').css({
+                            marginTop : -caption.height() 
+                         });
+                         
+                         element.find('.caption').each(function() {
+                             
+                             
+                             progValue = $(this).parent().find('.ui-progressbar-value');
+                             
+                             offset = progValue.height() / 2 - $(this).height() / 2;
+                             
+                             $(this).css({
+                                display: "inline-block",
+                                verticalAlign : "middle"
+                             });
+                             
+                             oldHeight = $('.cell').height();
+                             
+                             progValue.css({
+                                 height : oldHeight
+                             });
+                             
+                         });
+                        
+                        caption.resize(function() {
+                            $('.ui-progressbar-value').css({
+                                marginTop : -caption.height(),
+                                height : target.find('.cell').height()
+                            });
+                        });
+                        
                     }
 
                     buildHTML(htmlTarget);
