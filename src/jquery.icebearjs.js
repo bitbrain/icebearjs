@@ -32,16 +32,80 @@ initJQuery();
 	
         $.fn.extend({ 
             
-            icebearJS : function(options) {
+            /** IcebearProgress - Dynamical progress bar
+             * 
+             * @param {type} options options of the method
+             * @returns {undefined} this
+             */
+            icebearProgress : function(datasource) {
                 
-                // Merge passed in options with defaults
-                options = $.extend({}, {
-                    datasource : 'meta.xml',
-                    phase : new Array('dev', 'alpha', 'beta', 'release'),
-                }, options);
+                htmlTarget = $(this);
                 
-                $(this).html('Hello World!');
-                $(this).css('background-color', 'black');                
+                // DEFAULT OPTIONS
+                options = null;
+                
+                // LOAD FROM AJAX
+                $.when($.ajax({
+                        type: "GET",
+                        url: datasource,
+                        dataType: "xml",
+                        success: function(xml) {
+                            
+                            options = new Object();
+                            
+                            $(xml).find('resource').each(function() {
+                                var id = $(this).attr('id');
+                                var phaseList = new Array();
+                                if (id !== 'phaselist') {
+                                    options[id] = $(this).text();
+                                } else {
+                                    $(this).find('phase').each(function() {
+                                        phaseList.push($(this).text());
+                                    });
+                                    
+                                    options.phaselist = phaseList;
+                                }
+                            });
+                        }
+                        
+                // INVOKE META DATA
+                })).done(function() {
+                    
+                    if (options.length === null) {                        
+                        htmlTarget.html(datasource + ' not found.');
+                        return htmlTarget;
+                    } else if (options.phaselist === null) {
+                        htmlTarget.html(datasource + ' does not provide any phases');
+                        return htmlTarget;
+                    }
+                    
+                   
+
+                    function addElement(target, caption) {
+                        target.append('<div>' + caption + '</div>');
+                        target.children().each(function(){
+                            $(this).css({
+                                display :'table-cell',
+                                textAlign: 'center'
+                            });
+                        });
+                    }
+
+                    function buildHTML(target) {
+                        target.css('display', 'table');
+                        target.css('width', '100%');
+                        row = target.html('<div></div>').find('div');
+                        row.css('display', 'table-row');
+                        for (var i = 0; i < options.phaselist.length; ++i) {
+                            element = options.phaselist[i];
+                            row.html(addElement(row, element));
+                        }
+                    }
+
+                    buildHTML(htmlTarget);
+
+                    return htmlTarget;
+                });
             }
         });
 })(jQuery);
