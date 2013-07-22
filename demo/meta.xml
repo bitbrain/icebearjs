@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <resource type="string" id="name">Name of your app</resource>
+    <resource type="string" id="author">Miguel Gonzalez</resource>
+    <resource type="string" id="url">http://my-reality.de</resource>
+    <resource type="string" id="version">0.7</resource>
+    <resource type="string" id="phase">beta</resource>
+    <resource type="string" id="progress">27</resource>
+    
+    <resource type="string" id="phaselist">
+        <phase>dev</phase>
+        <phase>alpha</phase>
+        <phase>beta</phase>
+        <phase>release</phase>
+    </resource>
+</resources>
