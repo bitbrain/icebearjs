@@ -43,7 +43,17 @@ initJQuery();
                     datasource : "meta.xml",
                     animated : true,
                     animationType : 'easeOutBounce',
-                    duration : 2000
+                    duration : 1000,
+                    onPassPhase : function(element) {
+                        element.css({
+                            fontWeight: "normal"
+                        });
+                    },
+                    onEnterPhase : function(element) {
+                        element.css({
+                            fontWeight: "bold"
+                        });
+                    }
                 };
                 
                 options = $.extend(true, {}, defaults, options);                
@@ -86,7 +96,7 @@ initJQuery();
                    
 
                     function addElement(target, caption, progress, cssClass) {
-                        target.append('<div class="cell ' + cssClass + '"></div>');
+                        target.append('<div class="cell ' + cssClass + '">' + caption + '</div>');
                         
                         element = target.find('.cell').last();
                         
@@ -98,8 +108,6 @@ initJQuery();
                         element.progressbar({
                             value: progress
                         });
-                        
-                        element.append(caption);
                     }
                     
                     function animateElement(data, index) {
@@ -109,22 +117,29 @@ initJQuery();
                         duration = options.duration / animatedParts;
                         
                         if (element.parent().hasClass('current')) {
-                            animationType = 'easeOutBounce';
+                            animationType = options.animationType;
                         }
                         
+                        options.onEnterPhase(element.parent());
+                        
                         element.animate({ width : target.width}, duration, animationType, function() {
-                            if (index < data.length) {
-                                animateElement(data, ++index);
+                            
+                            if (element.width() > 0 && !element.parent().hasClass('current')) {
+                                options.onPassPhase(element.parent());
+                            }
+                            
+                            if (++index < animatedParts) {
+                                animateElement(data, index);
                             }
                         });
                     }
                     
-                    function animate(target) {
+                    function animate() {
                         
                         data = new Array();
                         index = 0;
+                        oldHeight = $('.ui-progressbar-value').height();
                         $('.ui-progressbar-value').each(function() {
-                            var val = $('.ui-progressbar-value').first();
                             var currentWidth = $(this).width();
                             currentWidth -= parseInt($(this).css('marginRight'));   
                             data[index++] = {
@@ -132,7 +147,9 @@ initJQuery();
                                 width : currentWidth
                             };
                             
-                             $(this).css('width', 0);
+                            
+                            $(this).width(0);
+                            $(this).css('height', oldHeight);
                         });
                         
                         animateElement(data, 0);
@@ -171,15 +188,13 @@ initJQuery();
                     }
 
                     buildHTML(htmlTarget);
-                    animate(htmlTarget);
+                    
+                    if (options.animated) {
+                        animate();
+                    }
                     
                     return htmlTarget;
                 });
             }
         });
 })(jQuery);
-
-
-
-
-
