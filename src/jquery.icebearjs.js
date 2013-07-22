@@ -82,9 +82,16 @@ initJQuery();
                    
 
                     function addElement(target, caption, progress, cssClass) {
-                        target.append('<div class="cell ' + cssClass + '"></div>');
+                        target.append('<div class="cell ' + cssClass + '"><span class="label">' + caption + '</span></div>');
                         
                         element = target.find('.cell').last();
+                        label = element.find('.label');
+                        
+                        label.css({
+                            verticalAlign : "middle",
+                            display : "block"
+                        });
+                        
                         element.css({
                             display :'table-cell',
                             textAlign: 'center'
@@ -93,21 +100,14 @@ initJQuery();
                         element.progressbar({
                             value: progress
                         });
-                        
-                        element.append('<span class="label">' + caption + '</span>');
-                        label = element.find('span.label').last();
-                        height = (element.height() - label.height()) / 2;
-                        value = parseInt(parseInt(element.offset().top) + height);
-                        label.css({
-                            position: "fixed",
-                            verticalAlign: "middle",
-                            top: value
-                        });
                     }
 
                     function buildHTML(target) {
-                        target.css('display', 'table');
-                        target.css('width', '100%');
+                        target.css({
+                            display: "table",
+                            width: "100%",
+                            tableLayout : "fixed"
+                        });
                         row = target.html('<div></div>').find('div');
                         row.css('display', 'table-row');
                         var pastPhase = false;
