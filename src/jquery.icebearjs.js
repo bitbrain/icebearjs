@@ -13,7 +13,7 @@ var jQueryScriptOutputted = false;
 function initJQuery() {
     
     //if the jQuery object isn't available
-    if (typeof(jQuery) == 'undefined') {
+    if (typeof(jQuery) === 'undefined') {
     
     
         if (! jQueryScriptOutputted) {
@@ -30,20 +30,21 @@ initJQuery();
  
 (function ($) {
 	
-	$.fn.icebearJS.defaults = {
-	      phase : {
-	                'dev',
-	                'alpha',
-	                'beta',
-	                'release'
-	      }, // Supported phases, can be interchanged externally
-	      
-	      animated : true
-	   };
-
+        $.fn.extend({ 
+            
+            icebearJS : function(options) {
+                
+                // Merge passed in options with defaults
+                options = $.extend({}, {
+                    datasource : 'meta.xml',
+                    phase : new Array('dev', 'alpha', 'beta', 'release'),
+                }, options);
+                
+                $(this).html('Hello World!');
+                $(this).css('background-color', 'black');                
+            }
+        });
 })(jQuery);
-
-
 
 
 
