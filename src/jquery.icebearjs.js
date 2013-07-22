@@ -202,7 +202,8 @@ initJQuery();
                         caption = element.find('.caption');
                         
                          $('.ui-progressbar-value').css({
-                            marginTop : -caption.height() 
+                            marginTop : -caption.height(),
+                            display : 'block'
                          });
                          
                          element.find('.caption').each(function() {

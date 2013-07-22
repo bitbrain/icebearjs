@@ -20,13 +20,20 @@ This plugin generates a progress bar which based on JQueryUI. Before you have to
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-	<resource type="string" id="app-name">Name of your app</resource>
-	<resource type="string" id="app-author">Miguel Gonzalez</resource>
-	<resource type="string" id="app-url">http://my-reality.de</resource>
-	<resource type="string" id="app-name">Name of your app</resource>
-	<resource type="string" id="app-version">0.7</resource>
-	<resource type="string" id="app-phase">alpha</resource>
-	<resource type="string" id="app-progress">87</resource>
+	<resource type="string" id="name">Name of your app</resource>
+	<resource type="string" id="author">Miguel Gonzalez</resource>
+	<resource type="string" id="url">http://my-reality.de</resource>
+	<resource type="string" id="name">Name of your app</resource>
+	<resource type="string" id="version">0.7</resource>
+	<resource type="string" id="phase">alpha</resource>
+	<resource type="string" id="progress">87</resource>
+	
+	<resource type="string" id="phaselist">
+                <phase>dev</phase>
+                <phase>alpha</phase>
+                <phase>beta</phase>
+                <phase>release</phase>
+    </resource>
 </resources>
 ```
 
@@ -36,7 +43,28 @@ Afterwards you have to define an element in your HTML page which should serve as
 <div id="progress"></div>
 
 <script type="text/javascript>">
-$('#progress').icebearJS('https://raw.github.com/MyRealityCoding/galacticum/master/res/xml/meta.xml');
+$('#progress').icebearProgress({
+        // Location of the meta file
+        datasource : 'https://raw.github.com/MyRealityCoding/galacticum/master/res/xml/meta.xml',
+        // Turn animations on or off
+        animated : true,
+        // Set the animation type
+        animationType : 'easeOutBounce',
+        // Set duration of the animation
+        duration : 1000,
+        // Event listener on passing a phase (during animation)
+        onPassPhase : function(element) {
+                element.css({
+                        fontWeight: "normal"
+                });
+        },
+        // Event listener on entering a phase (during animation)
+        onEnterPhase : function(element) {
+                element.css({
+                        fontWeight: "bold"
+                });
+        }
+});
 </script>
 ```
 
