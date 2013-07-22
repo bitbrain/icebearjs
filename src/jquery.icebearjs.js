@@ -82,11 +82,15 @@ initJQuery();
                    
 
                     function addElement(target, caption) {
-                        target.append('<div>' + caption + '</div>');
+                        target.append('<div>' + caption + '</div>');                        
                         target.children().each(function(){
                             $(this).css({
                                 display :'table-cell',
                                 textAlign: 'center'
+                            });
+                            
+                            $(this).progressbar({
+                                value: 37
                             });
                         });
                     }
