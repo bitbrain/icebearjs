@@ -82,7 +82,7 @@ initJQuery();
                    
 
                     function addElement(target, caption, progress, cssClass) {
-                        target.append('<div class="cell ' + cssClass + '">' + caption + '</div>');
+                        target.append('<div class="cell ' + cssClass + '"></div>');
                         
                         element = target.find('.cell').last();
                         element.css({
@@ -92,6 +92,16 @@ initJQuery();
 
                         element.progressbar({
                             value: progress
+                        });
+                        
+                        element.append('<span class="label">' + caption + '</span>');
+                        label = element.find('span.label').last();
+                        height = (element.height() - label.height()) / 2;
+                        value = parseInt(parseInt(element.offset().top) + height);
+                        label.css({
+                            position: "fixed",
+                            verticalAlign: "middle",
+                            top: value
                         });
                     }
 
