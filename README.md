@@ -16,36 +16,51 @@ Afterwards you can use supported IcebearJS.
 Metadata
 ===
 
-This plugin generates jQuery UI elements which base on JQueryUI. You have to define a XML source in a repository first, in the following example a basic ```meta.xml``` file:
+This plugin generates jQuery UI elements which base on JQueryUI. You have to define a jsonp source in a repository first, in the following example a basic ```meta.xml``` file:
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>
-	<name>Name of your app</name>
-	<author>Miguel Gonzalez</author>
-	<url>http://my-reality.de</url>
-	<version>0.7</version>
-	<phase>alpha</phase>
-	<progress>87</progress>
-	
-	<phaselist>
-                <phase>dev</phase>
-                <phase>alpha</phase>
-                <phase>beta</phase>
-                <phase>release</phase>
-        </phaselist>
+```json
+{
+    "response": {
+        "name" : "name-of-your-app",
+        "author" : "name-of-the-author",
+        "url" : "url-of-your-app",
+        "version" : "0.8",
+        "phase" : "beta",
+        "progress" : "73",
+        "phaselist" : [
+            "dev", "alpha", "beta", "release"
+        ]
+    }
+}
+```
 
-        <team>
-            <member
-                name="Miguel Gonzalez"
-                email="miguel-gonzalez@gmx.de"
-                facebook="your-facebook-url"
-                twitter="your-twitter-url"
-                gplus="your-google+-url"
-                website="http://my-reality.de"
-            />
-        </team>
-</resources>
+It is very important to put the data in a response object to work with json. 
+
+### Reading from remote
+
+Maybe you don't want to have a local meta file. In many cases you have a nice meta file in an external repository. Because of some security issues, IcebearJS works with jsonp (Jason with padding).
+
+Sometimes, the following error occurs:
+
+```text
+Origin http://your-server is not allowed by Access-Control-Allow-Origin.
+```
+
+To solve the bug, write a small php script and call it ```proxy```:
+```php
+<?php
+// File Name: proxy.php
+if (!isset($_GET['url'])) die();
+$url = urldecode($_GET['url']);
+$protocol = parse_url($url)['scheme'];
+$url = $protocol . '://' . str_replace($protocol . '://', '', $url);
+echo file_get_contents($url);
+?>
+```
+
+Now you can define the datasource as mentioned here:
+```javascript
+datasource : 'proxy.php?url=proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
 ```
 
 Elements
@@ -60,7 +75,7 @@ This UI element provides a animated progress bar which displays the current deve
 
 <script type="text/javascript>">
 $('#progress').icebearProgress({
-        datasource : 'https://raw.github.com/MyRealityCoding/galacticum/master/res/xml/meta.xml'
+        datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
 });
 </script>
 ```
