@@ -1,13 +1,13 @@
 {
     "name": "icebearjs",
     "title": "IcebearJS",
-    "description": "jQuery plugin which provides a development progress bar",
+    "description": "jQuery plugin which provides a development elements",
     "keywords": [
         "icebear",
         "ui",
         "development"
     ],
-    "version": "0.0.1",
+    "version": "1.0",
     "author": {
         "name": "Miguel Gonzalez",
         "url": "http://my-reality.de/about"
