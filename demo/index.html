@@ -10,7 +10,7 @@
             
             .progress {
                 background-color:#eee;
-                color:#666;
+                color:#aaa;
                 font-size:20px;
                 border:10px solid #f5f5f5;
                 width:50% !important;
@@ -18,15 +18,19 @@
             }
             
             .progress .cell {
-                border-right:1px dotted #7fb8d0;
+                border-right:1px solid #ccc;
                 vertical-align: middle;
+            }
+            
+            .cell.last {
+                border:none;
             }
             
             .caption {
                 padding : 10px;
             }
             
-            .ui-progressbar .ui-progressbar-value { background-color:#c9eaf8; }
+            .ui-progressbar .ui-progressbar-value { background-color:#e3e3e3; }
         </style>
     </head>
     <body>
@@ -38,7 +42,17 @@
         <script type="text/javascript">
             $('.progress').icebearProgress({
                 datasource : 'meta.xml',
-                duration : 1000
+                duration : 1000,
+                onEnterPhase : function(element) {
+                    element.css({
+                        color : "black"
+                    });
+                },
+                onLeavePhase : function(element) {
+                    element.css({
+                        color : "#aaa"
+                    });
+                }
             });
         </script>
     </body>

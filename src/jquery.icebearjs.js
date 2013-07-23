@@ -45,14 +45,10 @@ initJQuery();
                     animationType : 'easeOutBounce',
                     duration : 1000,
                     onLeavePhase : function(element) {
-                        element.css({
-                            fontWeight: "normal"
-                        });
+                        
                     },
                     onEnterPhase : function(element) {
-                        element.css({
-                            fontWeight: "bold"
-                        });
+                        
                     },
                     internalCss : true
                 };
@@ -138,60 +134,69 @@ initJQuery();
                     
                     function animate() {
                         
-                        data = new Array();
-                        index = 0;
-                        oldHeight = $('.ui-progressbar-value').height();
-                        $('.ui-progressbar-value').each(function() {
-                            var currentWidth = $(this).width();
-                            currentWidth -= parseInt($(this).css('marginRight'));   
-                            data[index++] = {
-                                element : $(this),
-                                width : currentWidth
-                            };
-                            
-                            
-                            $(this).width(0);
-                            $(this).css('height', oldHeight);
-                        });
-                        
-                        animateElement(data, 0);
+                        if (options.animated) {
+                            data = new Array();
+                            index = 0;
+                            oldHeight = $('.ui-progressbar-value').height();
+                            $('.ui-progressbar-value').each(function() {
+                                var currentWidth = $(this).width();
+                                currentWidth -= parseInt($(this).css('marginRight'));   
+                                data[index++] = {
+                                    element : $(this),
+                                    width : currentWidth
+                                };
+
+
+                                $(this).width(0);
+                                $(this).css('height', oldHeight);
+                            });
+
+                            animateElement(data, 0);
+                        }
                     }
                     
                     
                     function applyCSS(target) {
-                        
-                        target.find('.cell').css({
-                           textAlign : "center" 
-                        });
-                        
-                        target.find('.ui-progressbar').css({
-                           height : "1em",
-                           textAlign : "center"
-                        }).find('.ui-progressbar-value').css({
-                           height : "100%",
-                           display : "block"
-                        });
-                        
-                        
-                        
-                        element = target.find('.cell');
-                        
-                        element.each(function() {
-                            $(this).css('background-color', 'black'); // TESTING!
-                            
-                            caption = $(this).find('.caption');
-                            progress = $(this).find('.ui-progressbar-value');
-                            
-                            caption.css({
-                                marginBottom : -$(this).height()
+                        if (options.internalCss) {
+                            target.find('.cell').css({
+                               textAlign : "center" 
                             });
-                            
-                            newHeight = caption.height() 
-                                      + parseInt(caption.css('paddingTop'))
-                                      + parseInt(caption.css('paddingBottom'));
-                            $(this).parent().height(newHeight);
-                            progress.height(newHeight + 2);
-                        });
+
+                            target.find('.ui-progressbar').css({
+                               height : "1em",
+                               textAlign : "center"
+                            }).find('.ui-progressbar-value').css({
+                               height : "100%",
+                               display : "block"
+                            });
+
+
+
+                            element = target.find('.cell');
+
+                            element.each(function() {
+
+                                caption = $(this).find('.caption');
+                                progress = $(this).find('.ui-progressbar-value');
+
+                                caption.css({
+                                    marginBottom : -$(this).height()
+                                });
+
+                                newHeight = caption.height() 
+                                          + parseInt(caption.css('paddingTop'))
+                                          + parseInt(caption.css('paddingBottom'));
+                                $(this).parent().height(newHeight);
+                                progress.height(newHeight);
+                                caption.resize(function() {
+                                    applyCSS();
+                                });
+
+                                $(this).resize(function() {
+                                    applyCSS();
+                                });
+                            });
+                        }
                     }
 
                     function buildHTML(target) {
@@ -222,19 +227,26 @@ initJQuery();
                                 animatedParts++;
                             }
                             
+                            if (i === 0) {
+                                cssClass += ' first';
+                            } else if (i === options.phaselist.length  - 1) {
+                                cssClass += ' last';
+                            }
+                            
                             row.html(addElement(row, element, progress, cssClass));
                         }
                     }
 
-                    buildHTML(htmlTarget);
+                    buildHTML(htmlTarget);                   
+                    applyCSS(htmlTarget);
+                    animate();
                     
-                    if (options.internalCss) {
+                    $(window).resize(function() {
+                        htmlTarget.empty();
+                        buildHTML(htmlTarget);
                         applyCSS(htmlTarget);
-                    }
-                    
-                    if (options.animated) {
                         animate();
-                    }
+                    });
                     
                     return htmlTarget;
                 });
