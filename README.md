@@ -16,7 +16,7 @@ Afterwards you can use supported IcebearJS.
 Metadata
 ===
 
-This plugin generates jQuery UI elements which base on JQueryUI. You have to define a jsonp source in a repository first, in the following example a basic ```meta.xml``` file:
+This plugin generates jQuery UI elements which base on JQueryUI. You have to define a jsonp source in a repository first, in the following example a basic ```meta.json``` file:
 
 ```json
 {
@@ -46,7 +46,7 @@ Sometimes, the following error occurs:
 Origin http://your-server is not allowed by Access-Control-Allow-Origin.
 ```
 
-To solve the bug, write a small php script and call it ```proxy```:
+To solve the bug, write a small php script and call it ```proxy.php```:
 ```php
 <?php
 // File Name: proxy.php
@@ -60,7 +60,7 @@ echo file_get_contents($url);
 
 Now you can define the datasource as mentioned here:
 ```javascript
-datasource : 'proxy.php?url=proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
+datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
 ```
 
 Elements
