@@ -60,23 +60,25 @@ initJQuery();
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
-                        url: options.datasource,
-                        dataType: "xml",
-                        success: function(xml) {
-                            
-                            $(xml).find('resources').children().each(function() {
-                                var id = this.tagName;
+                        url: options.datasource + "?callback=?",
+                        dataType: "json",
+                        crossDomain: true,
+                        async:false,
+                        jsonp: false,
+                        success: function(data) {
+                           $.each(data, function(key, value) {
+                               $.each(value, function(key, value) {
                                 var phaseList = new Array();
-                                if (id !== 'phaselist') {
-                                    options[id] = $(this).text();
-                                    
+                                if (key !== 'phaselist') {
+                                    options[key] = value;                                    
                                 } else {
-                                    $(this).find('phase').each(function() {
-                                        phaseList.push($(this).text());
+                                    $.each(value, function(key, value) {
+                                        phaseList.push(value);
                                     });
                                     
                                     options.phaselist = phaseList;
                                 }
+                               });
                             });
                         }
                         

@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="../src/1.0/jquery.icebearjs.min.js"></script>
+        <script type="text/javascript" src="../src/jquery.icebearjs.js"></script>
         <style>
             
             .progress {
@@ -41,7 +41,7 @@
         
         <script type="text/javascript">
             $('.progress').icebearProgress({
-                datasource : 'meta.xml',
+                datasource : 'meta.json',
                 duration : 1000,
                 onEnterPhase : function(element) {
                     element.css({
