@@ -208,7 +208,7 @@ initJQuery();
                         row = target.html('<div></div>').find('div');
                         row.css('display', 'table-row');
                         var pastPhase = false;
-                        
+                        animatedParts = 0;
                         for (var i = 0; i < options.phaselist.length; ++i) {
                             element = options.phaselist[i];
                             
