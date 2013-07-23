@@ -44,14 +44,14 @@
                 datasource : 'meta.json',
                 duration : 1000,
                 onEnterPhase : function(element) {
-                    element.css({
+                    element.animate({
                         color : "black"
                     });
                 },
                 onLeavePhase : function(element) {
-                    element.css({
+                    element.animate({
                         color : "#aaa"
-                    });
+                    }, 500);
                 }
             });
         </script>

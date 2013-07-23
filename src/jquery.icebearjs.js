@@ -66,6 +66,7 @@ initJQuery();
                         async:false,
                         jsonp: false,
                         success: function(data) {
+                            
                            $.each(data, function(key, value) {
                                $.each(value, function(key, value) {
                                 var phaseList = new Array();
@@ -80,6 +81,10 @@ initJQuery();
                                 }
                                });
                             });
+                        },
+                        
+                        fail : function(data) {
+                            alert("Error: " + data);
                         }
                         
                 // INVOKE META DATA
