@@ -40,7 +40,7 @@ initJQuery();
             icebearProgress : function(options) {
                 
                 var defaults = {
-                    datasource : "meta.xml",
+                    datasource : "meta.json",
                     animated : true,
                     animationType : 'easeOutBounce',
                     duration : 1000,
@@ -57,16 +57,19 @@ initJQuery();
                 htmlTarget = $(this);                
                 animatedParts = 0;
                 
+                function basterd() {
+                    alert("MOH!");
+                }
+                
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
                         url: options.datasource + "?callback=?",
                         dataType: "json",
                         crossDomain: true,
-                        async:false,
+                        async:true,
                         jsonp: false,
                         success: function(data) {
-                            
                            $.each(data, function(key, value) {
                                $.each(value, function(key, value) {
                                 var phaseList = new Array();
