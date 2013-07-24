@@ -70,8 +70,7 @@ initJQuery();
                         async:true,
                         jsonp: false,
                         success: function(data) {
-                           $.each(data, function(key, value) {
-                               $.each(value, function(key, value) {
+                               $.each(data, function(key, value) {
                                 var phaseList = new Array();
                                 if (key !== 'phaselist') {
                                     options[key] = value;                                    
@@ -83,7 +82,6 @@ initJQuery();
                                     options.phaselist = phaseList;
                                 }
                                });
-                            });
                         },
                         
                         fail : function(data) {
