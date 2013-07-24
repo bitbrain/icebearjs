@@ -65,21 +65,19 @@ initJQuery();
                         async:true,
                         jsonp: false,
                         success: function(data) {
-                            
-                           $.each(data, function(key, value) {
-                               $.each(value, function(key, value) {
-                                    var phaseList = new Array();
-                                    if (key !== 'phaselist') {
-                                        options[key] = value;                                    
-                                    } else {
-                                        $.each(value, function(key, value) {
-                                            phaseList.push(value);
-                                        });
 
-                                        options.phaselist = phaseList;
-                                    }
-                                   });
-                           });
+                               $.each(data, function(key, value) {
+                                var phaseList = new Array();
+                                if (key !== 'phaselist') {
+                                    options[key] = value;                                    
+                                } else {
+                                    $.each(value, function(key, value) {
+                                        phaseList.push(value);
+                                    });
+                                    
+                                    options.phaselist = phaseList;
+                                }
+                               });
                         },
                         
                         fail : function(data) {
