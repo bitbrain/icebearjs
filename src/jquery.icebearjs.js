@@ -56,7 +56,6 @@ initJQuery();
                 options = $.extend(true, {}, defaults, options);                
                 htmlTarget = $(this);                
                 animatedParts = 0;
-                
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
@@ -66,17 +65,20 @@ initJQuery();
                         async:true,
                         jsonp: false,
                         success: function(data) {
+                            
                            $.each(data, function(key, value) {
-                            var phaseList = new Array();
-                            if (key !== 'phaselist') {
-                                options[key] = value;                                    
-                            } else {
-                                $.each(value, function(key, value) {
-                                    phaseList.push(value);
-                                });
+                               $.each(value, function(key, value) {
+                                    var phaseList = new Array();
+                                    if (key !== 'phaselist') {
+                                        options[key] = value;                                    
+                                    } else {
+                                        $.each(value, function(key, value) {
+                                            phaseList.push(value);
+                                        });
 
-                                options.phaselist = phaseList;
-                            }
+                                        options.phaselist = phaseList;
+                                    }
+                                   });
                            });
                         },
                         
