@@ -57,10 +57,6 @@ initJQuery();
                 htmlTarget = $(this);                
                 animatedParts = 0;
                 
-                function basterd() {
-                    alert("MOH!");
-                }
-                
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
