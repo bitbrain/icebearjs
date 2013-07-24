@@ -57,10 +57,6 @@ initJQuery();
                 htmlTarget = $(this);                
                 animatedParts = 0;
                 
-                function basterd() {
-                    alert("MOH!");
-                }
-                
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
@@ -71,19 +67,17 @@ initJQuery();
                         jsonp: false,
                         success: function(data) {
                            $.each(data, function(key, value) {
-                               $.each(value, function(key, value) {
-                                var phaseList = new Array();
-                                if (key !== 'phaselist') {
-                                    options[key] = value;                                    
-                                } else {
-                                    $.each(value, function(key, value) {
-                                        phaseList.push(value);
-                                    });
-                                    
-                                    options.phaselist = phaseList;
-                                }
-                               });
-                            });
+                            var phaseList = new Array();
+                            if (key !== 'phaselist') {
+                                options[key] = value;                                    
+                            } else {
+                                $.each(value, function(key, value) {
+                                    phaseList.push(value);
+                                });
+
+                                options.phaselist = phaseList;
+                            }
+                           });
                         },
                         
                         fail : function(data) {
@@ -210,6 +204,8 @@ initJQuery();
                     }
 
                     function buildHTML(target) {
+                        
+                        target.empty();
                         target.css({
                             display: "table",
                             width: '100%',
@@ -252,7 +248,6 @@ initJQuery();
                     animate();
                     
                     $(window).resize(function() {
-                        htmlTarget.empty();
                         buildHTML(htmlTarget);
                         applyCSS(htmlTarget);
                         animate();

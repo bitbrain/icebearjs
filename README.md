@@ -20,17 +20,15 @@ This plugin generates jQuery UI elements which base on JQueryUI. You have to def
 
 ```json
 {
-    "response": {
-        "name" : "name-of-your-app",
-        "author" : "name-of-the-author",
-        "url" : "url-of-your-app",
-        "version" : "0.8",
-        "phase" : "beta",
-        "progress" : "73",
-        "phaselist" : [
-            "dev", "alpha", "beta", "release"
-        ]
-    }
+    "name" : "name-of-your-app",
+    "author" : "name-of-the-author",
+    "url" : "url-of-your-app",
+    "version" : "0.8",
+    "phase" : "beta",
+    "progress" : "73",
+    "phaselist" : [
+        "dev", "alpha", "beta", "release"
+    ]
 }
 ```
 
@@ -52,8 +50,8 @@ To solve the bug, write a small php script and call it ```proxy.php```:
 // File Name: proxy.php
 if (!isset($_GET['url'])) die();
 $url = urldecode($_GET['url']);
-$protocol = parse_url($url)['scheme'];
-$url = $protocol . '://' . str_replace($protocol . '://', '', $url);
+$protocol = parse_url($url);
+$url = $protocol['scheme'] . '://' . str_replace($protocol['scheme'] . '://', '', $url);
 echo file_get_contents($url);
 ?>
 ```

@@ -1,3 +1,4 @@
+<?php ini_set( 'display_errors','1'); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +38,7 @@
         <h1>IcebearJS Demo</h1>
         
         <h3>icebearProgress</h3>
-        <div class="progress"></div>
+        <div class="progress">Loading progress...</div>
         
         <script type="text/javascript">
             $('.progress').icebearProgress({
