@@ -1,11 +1,13 @@
 {
-    "name" : "name-of-your-app",
-    "author" : "name-of-the-author",
-    "url" : "url-of-your-app",
-    "version" : "0.8",
-    "phase" : "beta",
-    "progress" : "73",
-    "phaselist" : [
-        "dev", "alpha", "beta", "release"
-    ]
+    "response": {
+        "name" : "name-of-your-app",
+        "author" : "name-of-the-author",
+        "url" : "url-of-your-app",
+        "version" : "0.8",
+        "phase" : "beta",
+        "progress" : "73",
+        "phaselist" : [
+            "dev", "alpha", "beta", "release"
+        ]
+    }
 }
