@@ -56,6 +56,11 @@ initJQuery();
                 options = $.extend(true, {}, defaults, options);                
                 htmlTarget = $(this);                
                 animatedParts = 0;
+                
+                function basterd() {
+                    alert("MOH!");
+                }
+                
                 // LOAD FROM AJAX
                 $.when($.ajax({
                         type: "GET",
@@ -65,8 +70,7 @@ initJQuery();
                         async:true,
                         jsonp: false,
                         success: function(data) {
-
-                               $.each(data, function(key, value) {
+                           $.each(data, function(key, value) {
                                 var phaseList = new Array();
                                 if (key !== 'phaselist') {
                                     options[key] = value;                                    
@@ -77,7 +81,7 @@ initJQuery();
                                     
                                     options.phaselist = phaseList;
                                 }
-                               });
+                            });
                         },
                         
                         fail : function(data) {
@@ -204,8 +208,6 @@ initJQuery();
                     }
 
                     function buildHTML(target) {
-                        
-                        target.empty();
                         target.css({
                             display: "table",
                             width: '100%',
@@ -248,6 +250,7 @@ initJQuery();
                     animate();
                     
                     $(window).resize(function() {
+                        htmlTarget.empty();
                         buildHTML(htmlTarget);
                         applyCSS(htmlTarget);
                         animate();
