@@ -31,6 +31,50 @@ function initJQuery() {
 initJQuery();
  
 (function ($) {
+    
+        // =========================================================
+        // Global data cache
+        // =========================================================
+        
+        $.fn.dataManager = {
+            
+            dataCache : new Array(),
+            
+            /**
+             * Checks if the url is already cached
+             * 
+             * @param {type} url url of the cache data
+             */
+            checkCache : function(url) {
+                return typeof(this.dataCache[url]) !== 'undefined' && this.dataCache[url] !== null;
+            },
+                    
+           /**
+            * Saves data to the cache
+            * 
+            * @param {type} url url of the cache data
+            * @param {type} data data itself
+            */
+            cacheData : function(url, data) {
+            
+                if (this.checkCache(url)) {
+                    $.fn.dataCache[url] = data;
+                }
+            },
+                 
+            /**
+             * Returns cached data
+             * 
+             * @param {type} url data url
+             */
+            getData : function(url) {
+                return this.dataCache[url];
+            }   
+        };
+        
+        // =========================================================
+        // Plugins
+        // =========================================================
 	
         $.fn.extend({
             
@@ -210,7 +254,7 @@ initJQuery();
                     }
                 }
                 
-                function onSuccess(data) {
+                function applyData(data) {
                     
                    $.each(data, function(key, value) {
                         var phaseList = new Array();
@@ -224,6 +268,9 @@ initJQuery();
                             options.phaselist = phaseList;
                         }
                     });
+                    
+                    // Save the data to the cache
+                    $.fn.dataManager.cacheData(options.datasource, data);
                 }
                 
                 function createUI() {
@@ -239,7 +286,6 @@ initJQuery();
                     buildHTML(htmlTarget);
                     applyCSS(htmlTarget);
                     animate();
-                    
 
                     $(window).resize(function() {
                         htmlTarget.empty();
@@ -255,20 +301,25 @@ initJQuery();
                 // Load data from Ajax
                 // =========================================================
                 
-                return $.when($.ajax({
-                        type: "GET",
-                        url: options.datasource + "?callback=?",
-                        dataType: "json",
-                        crossDomain: true,
-                        async:true,
-                        jsonp: false,
-                        success: onSuccess
-                        
-                // =========================================================
-                // Invoke meta data
-                // =========================================================
-                
-                })).done(createUI);
+                if ($.fn.dataManager.checkCache(options.datasource)) {
+                    applyData($.fn.dataManager.getData(options.datasource));
+                    createUI();
+                } else {                
+                    return $.when($.ajax({
+                            type: "GET",
+                            url: options.datasource + "?callback=?",
+                            dataType: "json",
+                            crossDomain: true,
+                            async:true,
+                            jsonp: false,
+                            success: applyData
+
+                    // =========================================================
+                    // Invoke meta data
+                    // =========================================================
+
+                    })).done(createUI);
+                }
             }
         });
 })(jQuery);

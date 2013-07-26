@@ -39,7 +39,6 @@
         
         <h3>icebearProgress</h3>
         <div class="progress">Loading progress...</div>
-        
         <script type="text/javascript">
             $('.progress').icebearProgress({
                 datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json',

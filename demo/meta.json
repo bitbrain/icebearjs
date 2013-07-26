@@ -1,5 +1,4 @@
 {
-    "response": {
         "name" : "name-of-your-app",
         "author" : "name-of-the-author",
         "url" : "url-of-your-app",
@@ -9,5 +8,4 @@
         "phaselist" : [
             "dev", "alpha", "beta", "release"
         ]
-    }
 }
