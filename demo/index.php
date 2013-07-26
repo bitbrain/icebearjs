@@ -27,7 +27,8 @@
             }
             
             .caption {
-                padding : 10px;
+                padding : 3px;
+                font-size:20px;
             }
             
             .ui-progressbar .ui-progressbar-value { background-color:#e3e3e3; }
