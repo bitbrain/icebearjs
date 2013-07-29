@@ -39,15 +39,14 @@
         
         <h3>icebearProgress</h3>
         <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
         
+        
+        <h3>icebearPatch</h3>
+        <div class="patchnotes"></div>
         
         <script type="text/javascript">
             $('.progress').icebearProgress({
-                datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json',
+                datasource : 'meta.json',
                 duration : 1000,
                 onEnterPhase : function(element) {
                     element.animate({
@@ -61,6 +60,9 @@
                 }
             });
             
+            $('.patchnotes').icebearPatch({
+                datasource : 'meta.json'
+            });
             
         </script>
     </body>
