@@ -11,7 +11,6 @@
             .progress {
                 background-color:#eee;
                 color:#aaa;
-                font-size:12px;
                 border:10px solid #f5f5f5;
                 width:50% !important;
                 margin-right:40px;
@@ -28,7 +27,7 @@
             
             .caption {
                 padding : 3px;
-                font-size:20px;
+                font-size:12px;
             }
             
             .ui-progressbar .ui-progressbar-value { background-color:#e3e3e3; }

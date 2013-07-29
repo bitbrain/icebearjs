@@ -339,8 +339,52 @@ initJQuery();
             // Functions
             // =========================================================
             
-            function buildHTML(target) {
-                target.html('deine Mama');
+            function generatePatchModule(c, content) {
+                if (typeof(content) !== 'undefined' && content !== null) {
+                    return '<div class="' + c + '">' + content + '</div>';
+                } else {
+                    return '';
+                }
+            }
+            
+            function generatePatchInfo(data) {
+                
+                var info = '<div class="category">' + data.caption + '</div>';
+                
+                info += "<ul>";
+                
+                for (var i = 0; i < data.content.length; ++i) {
+                    var element = data.content[i];
+                    
+                    info += '<li class="' + element.type + '">' + element.description + '</li>';
+                }
+                
+                info += '</ul>';
+                
+                return info;
+            }
+                        
+            function generatePatch(data) {
+                
+                var patch = '<div class="patch">';
+                var patchData = data.patch;
+                
+                patch += generatePatchModule('name', data.name);
+                patch += generatePatchModule('version', 'Version ' + data.version);
+                patch += generatePatchModule('description', data.description);
+                
+                for (var i = 0; i < patchData.length; ++i) {
+                    patch += generatePatchInfo(patchData[i]);
+                }
+                
+                return patch + '</div>';
+            }
+            
+            function buildHTML(target) {                
+                for (var i = 0; i < data.length; ++i) {
+                    target.html(generatePatch(data[i]));
+                }
+                
             }
             
             function applyCSS(target) {
