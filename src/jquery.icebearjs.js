@@ -68,9 +68,31 @@ initJQuery();
         }
     };
 
-    $.fn.loadPlugin = function(datasource, createUI) {
+    $.fn.loadPlugin = function(datasource, target, buildHTML, applyCSS, animate) {
+        
+        function createUI(htmlTarget) {
+
+                htmlTarget.each(function() {
+                    var realTarget = $(this);
+
+                    buildHTML(realTarget);
+                    applyCSS(realTarget);
+                    animate(realTarget);
+
+                    $(window).resize(function() {
+                        htmlTarget.empty();
+                        buildHTML(realTarget);
+                        applyCSS(realTarget);
+                        animate(realTarget);
+                    });
+
+                });
+
+                return htmlTarget;
+        }
+        
         if ($.fn.dataManager.checkCache(datasource)) {
-            createUI();
+            createUI(target);
         } else {
             $.when($.ajax({
                 type: "GET",
@@ -87,7 +109,7 @@ initJQuery();
                 // Invoke meta data
                 // =========================================================
 
-            })).done(createUI);
+            })).done(createUI(target));
         }
     };
 
@@ -275,32 +297,17 @@ initJQuery();
                 }
             }
 
-            function createUI() {
-
-                htmlTarget.each(function() {
-                    var realTarget = $(this);
-
-                    buildHTML(realTarget);
-                    applyCSS(realTarget);
-                    animate(realTarget);
-
-                    $(window).resize(function() {
-                        htmlTarget.empty();
-                        buildHTML(realTarget);
-                        applyCSS(realTarget);
-                        animate(realTarget);
-                    });
-
-                });
-
-                return htmlTarget;
-            }
+            
 
             // =========================================================
             // Load plugin
             // =========================================================
 
-            $.fn.loadPlugin(options.datasource, createUI);
+            $.fn.loadPlugin(options.datasource, 
+                            htmlTarget, 
+                            buildHTML, 
+                            applyCSS, 
+                            animate);
         },
         /** IcebearPatch - Dynamical patch notes
          * 
@@ -325,20 +332,24 @@ initJQuery();
             // =========================================================
             // Functions
             // =========================================================
-
-            function applyCSS(target) {
-
-            }
-
+            
             function buildHTML(target) {
-
+                target.html('deine Mama');
+            }
+            
+            function applyCSS(target) {
+                
+            }
+            
+            function animate(target) {
+                
             }
 
-            function createUI() {
-
-            }
-
-            $.fn.loadPlugin(options.datasource, applyData, createUI);
+            $.fn.loadPlugin(options.datasource, 
+                            htmlTarget, 
+                            buildHTML, 
+                            applyCSS, 
+                            animate);
         }
     });
 })(jQuery);
