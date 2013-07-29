@@ -72,6 +72,28 @@ initJQuery();
             }   
         };
         
+        $.fn.loadPlugin = function(datasource, applyData, createUI) {
+            if ($.fn.dataManager.checkCache(datasource)) {
+                    applyData($.fn.dataManager.getData(datasource));
+                    createUI();
+                } else {                
+                    return $.when($.ajax({
+                            type: "GET",
+                            url: datasource + "?callback=?",
+                            dataType: "json",
+                            crossDomain: true,
+                            async:true,
+                            jsonp: false,
+                            success: applyData
+
+                    // =========================================================
+                    // Invoke meta data
+                    // =========================================================
+
+                    })).done(createUI);
+                }
+        };
+        
         // =========================================================
         // Plugins
         // =========================================================
@@ -104,8 +126,8 @@ initJQuery();
                 };
                 
                 options = $.extend(true, {}, defaults, options);                
-                htmlTarget = $(this);                
-                animatedParts = 0;
+                var htmlTarget = $(this);                
+                var animatedParts = 0;
                 
                 // =========================================================
                 // Functions
@@ -114,7 +136,7 @@ initJQuery();
                 function addElement(target, caption, progress, cssClass) {
                         target.append('<div class="cell ' + cssClass + '"><div class="caption">' + caption + '</div></div>');
                         
-                        element = target.find('.cell').last();
+                        var element = target.find('.cell').last();
                         
                         element.css({
                             display :'table-cell',
@@ -127,10 +149,10 @@ initJQuery();
                 }
                     
                 function animateElement(data, index) {
-                    target = data[index];                        
-                    animationType = 'linear';
-                    element = target.element;
-                    duration = options.duration / animatedParts;
+                    var target = data[index];                        
+                    var animationType = 'linear';
+                    var element = target.element;
+                    var duration = options.duration / animatedParts;
 
                     if (element.parent().hasClass('current')) {
                         animationType = options.animationType;
@@ -151,9 +173,9 @@ initJQuery();
 
                 function animate(target) {
                     if (options.animated) {
-                        data = new Array();
-                        index = 0;
-                        oldHeight = target.find('.ui-progressbar-value').height();
+                        var data = new Array();
+                        var index = 0;
+                        var oldHeight = target.find('.ui-progressbar-value').height();
                         target.find('.ui-progressbar-value').each(function() {
                             var currentWidth = $(this).width();
                             currentWidth -= parseInt($(this).css('marginRight'));   
@@ -188,18 +210,18 @@ initJQuery();
 
 
 
-                        element = target.find('.cell');
+                        var element = target.find('.cell');
 
                         element.each(function() {
 
-                            caption = $(this).find('.caption');
-                            progress = $(this).find('.ui-progressbar-value');
+                            var caption = $(this).find('.caption');
+                            var progress = $(this).find('.ui-progressbar-value');
 
                             caption.css({
                                 marginBottom : -($(this).height())
                             });
 
-                            newHeight = caption.outerHeight();
+                            var newHeight = caption.outerHeight();
                             $(this).parent().height(newHeight);
                             progress.height(newHeight);
                             
@@ -221,12 +243,12 @@ initJQuery();
                         width: '100%',
                         tableLayout : "fixed"
                     });
-                    row = target.html('<div></div>').find('div');
+                    var row = target.html('<div></div>').find('div');
                     row.css('display', 'table-row');
                     var pastPhase = false;
                     animatedParts = 0;
                     for (var i = 0; i < options.phaselist.length; ++i) {
-                        element = options.phaselist[i];
+                        var element = options.phaselist[i];
 
                         var progress = 100;
                         var cssClass = 'reached';
@@ -272,19 +294,10 @@ initJQuery();
                     $.fn.dataManager.cacheData(options.datasource, data);
                 }
                 
-                function createUI() {
-                    
-                    if (options.length === null) {                        
-                        htmlTarget.html(datasource + ' not found.');
-                        return htmlTarget;
-                    } else if (options.phaselist === null) {
-                        htmlTarget.html(datasource + ' does not provide any phaselist');
-                        return htmlTarget;
-                    }           
+                function createUI() {         
                     
                     htmlTarget.each(function() {
-                        
-                        realTarget = $(this);
+                        var realTarget = $(this);
                         
                         buildHTML(realTarget);
                         applyCSS(realTarget);
@@ -303,28 +316,56 @@ initJQuery();
                 }
                 
                 // =========================================================
-                // Load data from Ajax
+                // Load plugin
                 // =========================================================
                 
-                if ($.fn.dataManager.checkCache(options.datasource)) {
-                    applyData($.fn.dataManager.getData(options.datasource));
-                    createUI();
-                } else {                
-                    return $.when($.ajax({
-                            type: "GET",
-                            url: options.datasource + "?callback=?",
-                            dataType: "json",
-                            crossDomain: true,
-                            async:true,
-                            jsonp: false,
-                            success: applyData
-
-                    // =========================================================
-                    // Invoke meta data
-                    // =========================================================
-
-                    })).done(createUI);
+                $.fn.loadPlugin(options.datasource, applyData, createUI);
+            },
+            
+            
+            
+            
+            
+            /** IcebearPatch - Dynamical patch notes
+             * 
+             * @param {type} options options of the method
+             * @returns {undefined} this
+             */
+            icebearPatch : function(options) {
+             
+                // =========================================================
+                // Variables
+                // =========================================================
+                
+                var defaults = {
+                    datasource : "meta.json",
+                    version : true,
+                    description : true
+                };
+                
+                options = $.extend(true, {}, defaults, options);                
+                var htmlTarget = $(this);         
+                // =========================================================
+                // Functions
+                // =========================================================
+                
+                function applyData(data) {
+                    
                 }
+                
+                function applyCSS(target) {
+                    
+                }
+                
+                function buildHTML(target) {
+                    
+                }
+                
+                function createUI() {
+                    
+                }
+                
+                //$.fn.loadPlugin(options.datasource, applyData, createUI);
             }
         });
 })(jQuery);
