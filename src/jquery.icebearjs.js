@@ -76,8 +76,11 @@ initJQuery();
                     var realTarget = $(this);
 
                     buildHTML(realTarget);
-                    applyCSS(realTarget);
-                    animate(realTarget);
+                    
+                    $(window).load(function() {
+                        applyCSS(realTarget);
+                        animate(realTarget);
+                    });
 
                     $(window).resize(function() {
                         htmlTarget.empty();
@@ -194,7 +197,7 @@ initJQuery();
                 if (options.animated) {
                     var data = new Array();
                     var index = 0;
-                    var oldHeight = target.find('.ui-progressbar-value').height();
+                    var oldHeight = target.find('.ui-progressbar-value').outerHeight();
                     target.find('.ui-progressbar-value').each(function() {
                         var currentWidth = $(this).width();
                         currentWidth -= parseInt($(this).css('marginRight'));
@@ -205,7 +208,7 @@ initJQuery();
 
 
                         $(this).width(0);
-                        $(this).css('height', oldHeight);
+                        $(this).height(oldHeight);
                     });
 
                     animateElement(data, 0);
@@ -230,20 +233,17 @@ initJQuery();
 
 
                     var element = target.find('.cell');
-
                     element.each(function() {
 
                         var caption = $(this).find('.caption');
                         var progress = $(this).find('.ui-progressbar-value');
-
-                        caption.css({
-                            marginBottom: -($(this).height())
+                        var height = caption.innerHeight();
+                        
+                        progress.css({
+                            height : height,
+                            marginTop: -height
                         });
-
-                        var newHeight = caption.outerHeight();
-                        $(this).parent().height(newHeight);
-                        progress.height(newHeight);
-
+                        
                         caption.resize(function() {
                             applyCSS(target);
                         });
@@ -328,6 +328,12 @@ initJQuery();
 
             options = $.extend(true, {}, defaults, options);
             var htmlTarget = $(this);
+            var data = $.fn.dataManager.getData(options.datasource)['patchnotes'];
+            
+            if (typeof(data) === 'undefined') {
+                htmlTarget.html('patchnotes not found.');
+                return htmlTarget;
+            }
 
             // =========================================================
             // Functions
