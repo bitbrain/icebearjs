@@ -150,13 +150,12 @@ initJQuery();
                     });
                 }
 
-                function animate() {
-
+                function animate(target) {
                     if (options.animated) {
                         data = new Array();
                         index = 0;
-                        oldHeight = $('.ui-progressbar-value').height();
-                        $('.ui-progressbar-value').each(function() {
+                        oldHeight = target.find('.ui-progressbar-value').height();
+                        target.find('.ui-progressbar-value').each(function() {
                             var currentWidth = $(this).width();
                             currentWidth -= parseInt($(this).css('marginRight'));   
                             data[index++] = {
@@ -204,12 +203,13 @@ initJQuery();
                             newHeight = caption.outerHeight();
                             $(this).parent().height(newHeight);
                             progress.height(newHeight);
+                            
                             caption.resize(function() {
-                                applyCSS();
+                                applyCSS(target);
                             });
 
                             $(this).resize(function() {
-                                applyCSS();
+                                applyCSS(target);
                             });
                         });
                     }
@@ -283,15 +283,18 @@ initJQuery();
                         return htmlTarget;
                     }           
                     
-                    buildHTML(htmlTarget);
-                    applyCSS(htmlTarget);
-                    animate();
+                    htmlTarget.each(function() {
+                        buildHTML($(this));
+                        applyCSS($(this));
+                        animate($(this));
 
-                    $(window).resize(function() {
-                        htmlTarget.empty();
-                        buildHTML(htmlTarget);
-                        applyCSS(htmlTarget);
-                        animate();
+                        $(window).resize(function() {
+                            htmlTarget.empty();
+                            buildHTML($(this));
+                            applyCSS($(this));
+                            animate($(this));
+                        });
+                    
                     });
                     
                     return htmlTarget;
