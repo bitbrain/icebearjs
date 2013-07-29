@@ -39,10 +39,6 @@
         
         <h3>icebearProgress</h3>
         <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
-        <div class="progress">Loading progress...</div>
         
         
         <script type="text/javascript">

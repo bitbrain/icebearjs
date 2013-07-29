@@ -137,9 +137,8 @@ initJQuery();
                     }
 
                     options.onEnterPhase(element.parent());
-
+                    
                     element.animate({ width : target.width}, duration, animationType, function() {
-
                         if (element.width() > 0 && !element.parent().hasClass('current')) {
                             options.onLeavePhase(element.parent());
                         }
@@ -284,15 +283,18 @@ initJQuery();
                     }           
                     
                     htmlTarget.each(function() {
-                        buildHTML($(this));
-                        applyCSS($(this));
-                        animate($(this));
+                        
+                        realTarget = $(this);
+                        
+                        buildHTML(realTarget);
+                        applyCSS(realTarget);
+                        animate(realTarget);
 
                         $(window).resize(function() {
                             htmlTarget.empty();
-                            buildHTML($(this));
-                            applyCSS($(this));
-                            animate($(this));
+                            buildHTML(realTarget);
+                            applyCSS(realTarget);
+                            animate(realTarget);
                         });
                     
                     });
