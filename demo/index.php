@@ -40,7 +40,6 @@
         <h3>icebearProgress</h3>
         <div class="progress">Loading progress...</div>
         
-        
         <h3>icebearPatch</h3>
         <div class="patchnotes"></div>
         

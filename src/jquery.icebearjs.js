@@ -68,9 +68,8 @@ initJQuery();
         }
     };
 
-    $.fn.loadPlugin = function(datasource, applyData, createUI) {
+    $.fn.loadPlugin = function(datasource, createUI) {
         if ($.fn.dataManager.checkCache(datasource)) {
-            applyData($.fn.dataManager.getData(datasource));
             createUI();
         } else {
             $.when($.ajax({
@@ -80,11 +79,13 @@ initJQuery();
                 crossDomain: true,
                 async: false,
                 jsonp: false,
-                success: applyData
+                success: function(data) {
+                    $.fn.dataManager.cacheData(datasource, data);
+                }
 
-                        // =========================================================
-                        // Invoke meta data
-                        // =========================================================
+                // =========================================================
+                // Invoke meta data
+                // =========================================================
 
             })).done(createUI);
         }
@@ -123,6 +124,7 @@ initJQuery();
             options = $.extend(true, {}, defaults, options);
             var htmlTarget = $(this);
             var animatedParts = 0;
+            var dataManager = $.fn.dataManager;
 
             // =========================================================
             // Functions
@@ -242,14 +244,17 @@ initJQuery();
                 row.css('display', 'table-row');
                 var pastPhase = false;
                 animatedParts = 0;
-                for (var i = 0; i < options.phaselist.length; ++i) {
-                    var element = options.phaselist[i];
+                var data = dataManager.getData(options.datasource);
+                var phaseList = data.phaselist;
+                
+                for (var i = 0; i < phaseList.length; ++i) {
+                    var element = phaseList[i];
 
                     var progress = 100;
                     var cssClass = 'reached';
 
-                    if (element === options.phase) {
-                        progress = parseInt(options.progress);
+                    if (element === data.phase) {
+                        progress = parseInt(data.progress);
                         pastPhase = true;
                         cssClass = 'current';
                         animatedParts++;
@@ -262,31 +267,12 @@ initJQuery();
 
                     if (i === 0) {
                         cssClass += ' first';
-                    } else if (i === options.phaselist.length - 1) {
+                    } else if (i === data.phaselist.length - 1) {
                         cssClass += ' last';
                     }
 
                     row.html(addElement(row, element, progress, cssClass));
                 }
-            }
-
-            function applyData(data) {
-
-                $.each(data, function(key, value) {
-                    var phaseList = new Array();
-                    if (key !== 'phaselist') {
-                        options[key] = value;
-                    } else {
-                        $.each(value, function(key, value) {
-                            phaseList.push(value);
-                        });
-
-                        options.phaselist = phaseList;
-                    }
-                });
-
-                // Save the data to the cache
-                $.fn.dataManager.cacheData(options.datasource, data);
             }
 
             function createUI() {
@@ -314,7 +300,7 @@ initJQuery();
             // Load plugin
             // =========================================================
 
-            $.fn.loadPlugin(options.datasource, applyData, createUI);
+            $.fn.loadPlugin(options.datasource, createUI);
         },
         /** IcebearPatch - Dynamical patch notes
          * 
@@ -339,10 +325,6 @@ initJQuery();
             // =========================================================
             // Functions
             // =========================================================
-
-            function applyData(data) {
-                
-            }
 
             function applyCSS(target) {
 
