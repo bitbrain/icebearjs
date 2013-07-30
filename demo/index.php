@@ -111,6 +111,7 @@
             <div class="patchnotes"></div>
 
             <h3><span class="ice">icebear</span><span class="fire">Team</span></h3>
+            <div class="team"></div>
         </div>
         <script type="text/javascript">
             $('.progress').icebearProgress({
@@ -129,6 +130,10 @@
             });
             
             $('.patchnotes').icebearPatch({
+                datasource : 'meta.json'
+            });
+            
+            $('.team').icebearTeam({
                 datasource : 'meta.json'
             });
             
