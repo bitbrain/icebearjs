@@ -309,6 +309,9 @@ initJQuery();
                             applyCSS, 
                             animate);
         },
+                
+                
+                
         /** IcebearPatch - Dynamical patch notes
          * 
          * @param {type} options options of the method
@@ -400,6 +403,45 @@ initJQuery();
                             buildHTML, 
                             applyCSS, 
                             animate);
-        }
+        },
+                
+                
+                
+        /** IcebearTeam - Dynamical team information
+         * 
+         * @param {type} options options of the method
+         * @returns {undefined} this
+         */
+         icebearTeam : function(options) {
+             
+             // =========================================================
+            // Variables
+            // =========================================================
+
+            var defaults = {
+                datasource: "meta.json",
+                // Enable/Disable gravatar
+                avatar : true,
+                // Enable/Disable job
+                job : true,
+                // Enable/Disable social networks
+                social : true,
+                // Enable/Disable website link
+                linked : true
+            };
+
+            options = $.extend(true, {}, defaults, options);
+            var htmlTarget = $(this);
+            var data = $.fn.dataManager.getData(options.datasource)['patchnotes'];
+            
+            if (typeof(data) === 'undefined') {
+                htmlTarget.html('patchnotes not found.');
+                return htmlTarget;
+            }
+
+            // =========================================================
+            // Functions
+            // =========================================================
+         }
     });
 })(jQuery);

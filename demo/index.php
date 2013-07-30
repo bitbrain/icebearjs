@@ -8,11 +8,15 @@
         <script type="text/javascript" src="../src/jquery.icebearjs.js"></script>
         <style>
             
+            .center_div {
+                margin:auto;
+                width:65%;
+            }
+            
             .progress {
                 background-color:#eee;
                 color:#aaa;
                 border:10px solid #f5f5f5;
-                width:50% !important;
                 margin-right:40px;
             }
             
@@ -73,22 +77,41 @@
                 color:#82c7fd;
             }
             
+            h1 {
+                font-size:100px;
+                color:#eee;
+                letter-spacing:-12px;
+            }
+            
+            .ice {
+                color:#d6f5ff;
+            }
+            
+            .fire {
+                color:#e0c186;
+            }
+            
             h3 {
                 margin-top:60px;
+                font-size:40px;
+                letter-spacing:-4px;
             }
             
             
         </style>
     </head>
     <body>
-        <h1>IcebearJS Demo</h1>
-        
-        <h3>icebearProgress</h3>
-        <div class="progress">Loading progress...</div>
-        
-        <h3>icebearPatch</h3>
-        <div class="patchnotes"></div>
-        
+        <div class="center_div">
+            <h1><span class="ice">Icebear</span><span class="fire">JS</span> Demo</h1>
+
+            <h3><span class="ice">icebear</span><span class="fire">Progress</span></h3>
+            <div class="progress">Loading progress...</div>
+
+            <h3><span class="ice">icebear</span><span class="fire">Patch</span></h3>
+            <div class="patchnotes"></div>
+
+            <h3><span class="ice">icebear</span><span class="fire">Team</span></h3>
+        </div>
         <script type="text/javascript">
             $('.progress').icebearProgress({
                 datasource : 'meta.json',

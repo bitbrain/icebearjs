@@ -43,5 +43,26 @@
             }
          ]
       }
+   ],
+           
+   "team" : [
+      {
+         "name" : "Miguel Gonzalez",
+         "job": "Developer",
+         "email" : "miguel-gonzalez@gmx.de",
+         "url" : "http://my-reality.de",
+         "facebook" : "https://facebook.com/3928u28u",
+         "twitter" : "https://twitter.com/sdccsds",
+         "google+" : "https://plus.google.com/2832928392"
+      },
+      {
+         "name" : "Markus Mustermann",
+         "job": "Manager",
+         "email" : "m.mustermann@gmx.de",
+         "url" : "http://musterhausen.e",
+         "facebook" : "https://facebook.com/3928u28u",
+         "twitter" : "https://twitter.com/sdccsds",
+         "google+" : "https://plus.google.com/2832928392"
+      }
    ]
 }
