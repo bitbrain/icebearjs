@@ -68,9 +68,34 @@ initJQuery();
         }
     };
 
-    $.fn.loadPlugin = function(datasource, createUI) {
+    $.fn.loadPlugin = function(datasource, target, buildHTML, applyCSS, animate) {
+        
+        function createUI(htmlTarget) {
+
+                htmlTarget.each(function() {
+                    var realTarget = $(this);
+
+                    buildHTML(realTarget);
+                    
+                    $(window).load(function() {
+                        applyCSS(realTarget);
+                        animate(realTarget);
+                    });
+
+                    $(window).resize(function() {
+                        htmlTarget.empty();
+                        buildHTML(realTarget);
+                        applyCSS(realTarget);
+                        animate(realTarget);
+                    });
+
+                });
+
+                return htmlTarget;
+        }
+        
         if ($.fn.dataManager.checkCache(datasource)) {
-            createUI();
+            createUI(target);
         } else {
             $.when($.ajax({
                 type: "GET",
@@ -87,7 +112,7 @@ initJQuery();
                 // Invoke meta data
                 // =========================================================
 
-            })).done(createUI);
+            })).done(createUI(target));
         }
     };
 
@@ -172,7 +197,7 @@ initJQuery();
                 if (options.animated) {
                     var data = new Array();
                     var index = 0;
-                    var oldHeight = target.find('.ui-progressbar-value').height();
+                    var oldHeight = target.find('.ui-progressbar-value').outerHeight();
                     target.find('.ui-progressbar-value').each(function() {
                         var currentWidth = $(this).width();
                         currentWidth -= parseInt($(this).css('marginRight'));
@@ -183,7 +208,7 @@ initJQuery();
 
 
                         $(this).width(0);
-                        $(this).css('height', oldHeight);
+                        $(this).height(oldHeight);
                     });
 
                     animateElement(data, 0);
@@ -208,20 +233,17 @@ initJQuery();
 
 
                     var element = target.find('.cell');
-
                     element.each(function() {
 
                         var caption = $(this).find('.caption');
                         var progress = $(this).find('.ui-progressbar-value');
-
-                        caption.css({
-                            marginBottom: -($(this).height())
+                        var height = caption.innerHeight();
+                        
+                        progress.css({
+                            height : height,
+                            marginTop: -height
                         });
-
-                        var newHeight = caption.outerHeight();
-                        $(this).parent().height(newHeight);
-                        progress.height(newHeight);
-
+                        
                         caption.resize(function() {
                             applyCSS(target);
                         });
@@ -275,32 +297,17 @@ initJQuery();
                 }
             }
 
-            function createUI() {
-
-                htmlTarget.each(function() {
-                    var realTarget = $(this);
-
-                    buildHTML(realTarget);
-                    applyCSS(realTarget);
-                    animate(realTarget);
-
-                    $(window).resize(function() {
-                        htmlTarget.empty();
-                        buildHTML(realTarget);
-                        applyCSS(realTarget);
-                        animate(realTarget);
-                    });
-
-                });
-
-                return htmlTarget;
-            }
+            
 
             // =========================================================
             // Load plugin
             // =========================================================
 
-            $.fn.loadPlugin(options.datasource, createUI);
+            $.fn.loadPlugin(options.datasource, 
+                            htmlTarget, 
+                            buildHTML, 
+                            applyCSS, 
+                            animate);
         },
         /** IcebearPatch - Dynamical patch notes
          * 
@@ -321,24 +328,78 @@ initJQuery();
 
             options = $.extend(true, {}, defaults, options);
             var htmlTarget = $(this);
+            var data = $.fn.dataManager.getData(options.datasource)['patchnotes'];
+            
+            if (typeof(data) === 'undefined') {
+                htmlTarget.html('patchnotes not found.');
+                return htmlTarget;
+            }
 
             // =========================================================
             // Functions
             // =========================================================
-
+            
+            function generatePatchModule(c, content) {
+                if (typeof(content) !== 'undefined' && content !== null) {
+                    return '<div class="' + c + '">' + content + '</div>';
+                } else {
+                    return '';
+                }
+            }
+            
+            function generatePatchInfo(data) {
+                
+                var info = '<div class="category">' + data.caption + '</div>';
+                
+                info += "<ul>";
+                
+                for (var i = 0; i < data.content.length; ++i) {
+                    var element = data.content[i];
+                    
+                    info += '<li class="' + element.type + '">' + element.description + '</li>';
+                }
+                
+                info += '</ul>';
+                
+                return info;
+            }
+                        
+            function generatePatch(data) {
+                
+                var patch = '<div class="patch">';
+                var patchData = data.patch;
+                
+                patch += generatePatchModule('name', data.name);
+                patch += generatePatchModule('version', 'Version ' + data.version);
+                patch += generatePatchModule('description', data.description);
+                
+                for (var i = 0; i < patchData.length; ++i) {
+                    patch += generatePatchInfo(patchData[i]);
+                }
+                
+                return patch + '</div>';
+            }
+            
+            function buildHTML(target) {                
+                for (var i = 0; i < data.length; ++i) {
+                    target.html(generatePatch(data[i]));
+                }
+                
+            }
+            
             function applyCSS(target) {
-
+                
+            }
+            
+            function animate(target) {
+                
             }
 
-            function buildHTML(target) {
-
-            }
-
-            function createUI() {
-
-            }
-
-            $.fn.loadPlugin(options.datasource, applyData, createUI);
+            $.fn.loadPlugin(options.datasource, 
+                            htmlTarget, 
+                            buildHTML, 
+                            applyCSS, 
+                            animate);
         }
     });
 })(jQuery);
