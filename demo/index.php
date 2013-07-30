@@ -97,6 +97,41 @@
                 letter-spacing:-4px;
             }
             
+            .team {
+                text-align:left;
+            }
+            
+            a {
+                color:#e0c186;
+                text-decoration:none;
+            }
+            
+            a:hover {
+                color:#c3aa7a;
+            }
+            
+            .team .member {
+                width:130px;
+                display:inline-block;
+                
+            }
+            
+            .team .member .name {
+                font-size:26px;
+            }
+            
+            .team .member .job {
+                color:#98c852;
+            }
+            
+            .team .member .avatar {
+                margin-top:10px;
+                margin-bottom:10px;
+            }
+            
+            .team .member .socialbox a {
+                display:block;
+            }
             
         </style>
     </head>
@@ -111,6 +146,7 @@
             <div class="patchnotes"></div>
 
             <h3><span class="ice">icebear</span><span class="fire">Team</span></h3>
+            <div class="team"></div>
         </div>
         <script type="text/javascript">
             $('.progress').icebearProgress({
@@ -129,6 +165,10 @@
             });
             
             $('.patchnotes').icebearPatch({
+                datasource : 'meta.json'
+            });
+            
+            $('.team').icebearTeam({
                 datasource : 'meta.json'
             });
             
