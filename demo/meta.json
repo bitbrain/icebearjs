@@ -11,20 +11,20 @@
                 
         "patchnotes" : [
         {
-         "name" : "name-of-the-patch",
-         "version" : "1.0",
-         "description" : "Description of this patch",
+         "name" : "Ruins of Zandaria",
+         "version" : "1.6.2",
+         "description" : "Dark creatures enter the realm. It is time for a new battle!",
          "patch" : [
             {
             "caption" : "General",
             "content" : [
                   {
-                     "type" : "new",
-                     "description" : "Added feature 1"
+                     "type" : "added",
+                     "description" : "New menu has been implemented"
                   },
                   {
-                     "type" : "delete",
-                     "description" : "Removed feature 1"
+                     "type" : "removed",
+                     "description" : "Removed old buttons"
                   }
                ]
             },
@@ -33,11 +33,11 @@
             "content" : [
                   {
                      "type" : "modified",
-                     "description" : "Modified feature 1"
+                     "description" : "Changed skin of 'Dark Thrull'"
                   },
                   {
-                     "type" : "delete",
-                     "description" : "Removed feature 1"
+                     "type" : "removed",
+                     "description" : "Excluded player vs. player mode (PVP)"
                   }
                ]
             }
