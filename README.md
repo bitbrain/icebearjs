@@ -20,15 +20,72 @@ This plugin generates jQuery UI elements which base on JQueryUI. You have to def
 
 ```json
 {
-    "name" : "name-of-your-app",
-    "author" : "name-of-the-author",
-    "url" : "url-of-your-app",
-    "version" : "0.8",
-    "phase" : "beta",
-    "progress" : "73",
-    "phaselist" : [
-        "dev", "alpha", "beta", "release"
-    ]
+        "name" : "name-of-your-app",
+        "author" : "name-of-the-author",
+        "url" : "url-of-your-app",
+        "version" : "0.8",
+        "phase" : "beta",
+        "progress" : "73",
+        "phaselist" : [
+            "dev", "alpha", "beta", "release"
+        ],
+                
+        "patchnotes" : [
+        {
+         "name" : "Ruins of Zandaria",
+         "version" : "1.6.2",
+         "description" : "Dark creatures enter the realm. It is time for a new battle!",
+         "patch" : [
+            {
+            "caption" : "General",
+            "content" : [
+                  {
+                     "type" : "added",
+                     "description" : "New menu has been implemented"
+                  },
+                  {
+                     "type" : "removed",
+                     "description" : "Removed old buttons"
+                  }
+               ]
+            },
+            {
+            "caption" : "Features",
+            "content" : [
+                  {
+                     "type" : "modified",
+                     "description" : "Changed skin of 'Dark Thrull'"
+                  },
+                  {
+                     "type" : "removed",
+                     "description" : "Excluded player vs. player mode (PVP)"
+                  }
+               ]
+            }
+         ]
+      }
+   ],
+           
+   "team" : [
+      {
+         "name" : "Miguel Gonzalez",
+         "job": "Developer",
+         "email" : "miguel-gonzalez@gmx.de",
+         "url" : "http://my-reality.de",
+         "facebook" : "https://facebook.com/3928u28u",
+         "twitter" : "https://twitter.com/sdccsds",
+         "googleplus" : "https://plus.google.com/2832928392"
+      },
+      {
+         "name" : "Markus Mustermann",
+         "job": "Manager",
+         "email" : "m.mustermann@gmx.de",
+         "url" : "http://musterhausen.e",
+         "facebook" : "https://facebook.com/3928u28u",
+         "twitter" : "https://twitter.com/sdccsds",
+         "googleplus" : "https://plus.google.com/2832928392"
+      }
+   ]
 }
 ```
 
@@ -89,4 +146,62 @@ That's all! Now you can view a full working, animated progress bar which display
  * *onLeavePhase*: listener function which is called when a phase has been leaved
  * *internalCss*: Disable for custom css positioning
 
+### icebearPatch
 
+This UI element provides patchnotes which can be styled with CSS afterwards:
+
+```html
+<div id="patchnotes"></div>
+
+<script type="text/javascript>">
+$('#patchnotes').icebearPatch({
+        datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
+});
+</script>
+```
+
+#### Options
+
+ * *datasource*: The location of your meta data file
+ * *version*: Shows the version of the patch
+ * *description*: shows the description of a patch
+ 
+### icebearTeam
+
+This UI element provides a team view which can be styled with CSS afterwards:
+
+```html
+<div id="team"></div>
+
+<script type="text/javascript>">
+$('#team').icebearTeam({
+        datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
+});
+</script>
+```
+
+#### Options
+
+ * *datasource*: The location of your meta data file
+ * *job*: Shows the job title
+ * *social*: Shows social box
+ * *linked*: Add a link to each member
+ 
+### icebearMeta
+
+This UI element provides meta information:
+
+```html
+<div id="version"></div>
+
+<script type="text/javascript>">
+$('#version').icebearMeta({
+        datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json'
+});
+</script>
+```
+
+#### Options
+
+ * *datasource*: The location of your meta data file
+ * *type*: Type of the meta data (default: version)
