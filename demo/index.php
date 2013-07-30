@@ -8,6 +8,10 @@
         <script type="text/javascript" src="../src/jquery.icebearjs.js"></script>
         <style>
             
+            body {
+                color:#aaa;
+            }
+            
             .center_div {
                 margin:auto;
                 width:65%;
@@ -147,6 +151,11 @@
 
             <h3><span class="ice">icebear</span><span class="fire">Team</span></h3>
             <div class="team"></div>
+            
+            <h3><span class="ice">icebear</span><span class="fire">Meta</span></h3>
+            <div>Version: <span class="version"></span></div>
+            <div>Author: <span class="author"></span></div>
+            
         </div>
         <script type="text/javascript">
             $('.progress').icebearProgress({
@@ -170,6 +179,15 @@
             
             $('.team').icebearTeam({
                 datasource : 'meta.json'
+            });
+            
+            $('.version').icebearMeta({
+                datasource : 'meta.json'
+            });
+            
+            $('.author').icebearMeta({
+                datasource : 'meta.json',
+                type : 'author'
             });
             
         </script>

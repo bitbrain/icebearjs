@@ -942,6 +942,50 @@ initJQuery();
                     applyCSS,
                     animate);
 
+        },
+        
+        
+        /** IcebearMeta - Dynamical meta information
+         * 
+         * @param {type} options options of the method
+         * @returns {undefined} this
+         */
+        icebearMeta: function(options) {
+
+            // =========================================================
+            // Variables
+            // =========================================================
+
+            var defaults = {
+                datasource: "meta.json",
+                type: 'version'
+            };
+
+            options = $.extend(true, {}, defaults, options);
+            var data = $.fn.dataManager.getData(options.datasource);
+            
+            // =========================================================
+            // Load plugin
+            // =========================================================
+
+            function buildHTML(target) {
+                target.html(data[options.type]);
+            }
+
+            function applyCSS(target) {
+
+            }
+
+            function animate(target) {
+
+            }
+
+            $.fn.loadPlugin(options.datasource,
+                    $(this),
+                    buildHTML,
+                    applyCSS,
+                    animate);
         }
+                
     });
 })(jQuery);
