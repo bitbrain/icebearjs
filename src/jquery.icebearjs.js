@@ -855,7 +855,7 @@ initJQuery();
 
             function generateGravatar(email) {
                 var hash = md5(email.toLowerCase());
-                return '<img alt="' + email + '" src="http://www.gravatar.com/avatar/' + hash + '" />';
+                return '<img class="avatar" alt="' + email + '" src="http://www.gravatar.com/avatar/' + hash + '" />';
             }
             
             function generateSocialModule(member, type, caption) {
@@ -880,11 +880,13 @@ initJQuery();
 
                 var team = '';
 
-                if (options.linked) {
-                    team += '<a class="member" href="' + member.url + '">';
-                } 
+                
 
                 team += '<div class="member">';
+                
+                if (options.linked) {
+                    team += '<a style="display:block;" class="member" href="' + member.url + '">';
+                } 
                 team += '<div class="name">' + member.name + '</div>';
                 if (options.job) {
                     team += '<div class="job">' + member.job + '</div>';
@@ -905,12 +907,13 @@ initJQuery();
                     
                     team += '</div>';
                 }
-
-                team += '</div>';
-
+                
                 if (options.linked) {
                     team += '</a>';
                 }
+
+                team += '</div>';
+
 
                 return team;
             }
