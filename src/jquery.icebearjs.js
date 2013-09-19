@@ -741,12 +741,6 @@ initJQuery();
             };
 
             options = $.extend(true, {}, defaults, options);
-            var data = $.fn.dataManager.getData(options.datasource)['patchnotes'];
-
-            if (typeof(data) === 'undefined') {
-                $(this).html('patchnotes not found.');
-                return $(this);
-            }
 
             // =========================================================
             // Functions
@@ -782,15 +776,23 @@ initJQuery();
                 var patch = '<div class="patch">';
                 var patchData = data.patch;
 
-                patch += generatePatchModule('name', data.name);
-                patch += generatePatchModule('version', 'Version ' + data.version);
-                patch += generatePatchModule('description', data.description);
+                if (typeof patchData !== "undefined") {
 
-                for (var i = 0; i < patchData.length; ++i) {
-                    patch += generatePatchInfo(patchData[i]);
+                    patch += generatePatchModule('name', data.name);
+                    patch += generatePatchModule('version', 'Version ' + data.version);
+                    patch += generatePatchModule('description', data.description);
+
+                    for (var i = 0; i < patchData.length; ++i) {
+                        patch += generatePatchInfo(patchData[i]);
+                    }
+
+                    patch += '</div>';
+
+                } else {
+                    patch = "No patch is defined in " + options.datasource;
                 }
 
-                return patch + '</div>';
+                return patch;
             }
 
             // =========================================================
@@ -798,8 +800,15 @@ initJQuery();
             // =========================================================
 
             function buildHTML(target) {
-                for (var i = 0; i < data.length; ++i) {
-                    target.append(generatePatch(data[i]));
+
+                var data = $.fn.dataManager.getData(options.datasource)['patchnotes'];
+
+                if (typeof data !== "undefined") {
+                    for (var i = 0; i < data.length; ++i) {
+                        target.append(generatePatch(data[i]));
+                    }
+                } else {
+                    target.html("No patch data found in " + options.datasource);
                 }
 
             }
@@ -842,12 +851,6 @@ initJQuery();
             };
 
             options = $.extend(true, {}, defaults, options);
-            var data = $.fn.dataManager.getData(options.datasource)['team'];
-
-            if (typeof(data) === 'undefined') {
-                $(this).html('patchnotes not found.');
-                return $(this);
-            }
 
             // =========================================================
             // Functions
@@ -923,8 +926,24 @@ initJQuery();
             // =========================================================
 
             function buildHTML(target) {
-                for (var i = 0; i < data.length; ++i) {
-                    target.append(generateMember(data[i]));
+
+                var data = $.fn.dataManager.getData(options.datasource);
+
+                if (typeof data === "undefined") {
+                     target.html("No data found in " + options.datasource);
+                     return;
+                 }
+
+                var teamData = data['team'];
+
+                if (typeof teamData !== "undefined") {
+
+                    for (var i = 0; i < teamData.length; ++i) {
+                        target.append(generateMember(teamData[i]));
+                    }
+
+                } else {
+                   target.append('No team data found in ' + options.datasource);
                 }
             }
 
@@ -962,13 +981,13 @@ initJQuery();
             };
 
             options = $.extend(true, {}, defaults, options);
-            var data = $.fn.dataManager.getData(options.datasource);
             
             // =========================================================
             // Load plugin
             // =========================================================
 
             function buildHTML(target) {
+                var data = $.fn.dataManager.getData(options.datasource);
                 target.html(data[options.type]);
             }
 

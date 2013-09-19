@@ -159,7 +159,7 @@
         </div>
         <script type="text/javascript">
             $('.progress').icebearProgress({
-                datasource : 'meta.json',
+                datasource : 'proxy.php?url=https://raw.github.com/MyRealityCoding/galacticum/master/res/meta.json',
                 duration : 1000,
                 onEnterPhase : function(element) {
                     element.animate({
