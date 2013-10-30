@@ -8,7 +8,7 @@ Getting started
 To use IcebearJS properly you have to include it. Put the following line in your head code:
 
 ```html
-<script type="text/javascript" src="http://dev.my-reality.de/jquery/icebearjs/1.0.1/jquery.icebearjs.min.js"></script>
+<script type="text/javascript" src="http://dev.my-reality.de/jquery/icebearjs/1.1/jquery.icebearjs.min.js"></script>
 ```
 
 Afterwards you can use supported IcebearJS.
