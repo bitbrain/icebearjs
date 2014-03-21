@@ -136,6 +136,18 @@ $('#progress').icebearProgress({
 ```
 That's all! Now you can view a full working, animated progress bar which displays the current development status of your game. Additionally you can style it with CSS to improve appeareance.
 
+#### Attributes
+
+There are more than the datasource attribute to configure:
+
+* datasource - Set a source for the json input (Standard: "meta.json")
+* animated - Determines if the bar should be animated at all (Standard: true)
+* animationType: jQueryUI [easing effects](http://api.jqueryui.com/easings/) (Standard: "easeOutBounce")
+* duration: Duration of animation in miliseconds (Standard: 1000)
+* onLeavePhase: Event function which is called on phase leaving (Standard: function(element) { })
+* onEnterPhase: Event function which is called on phase entering (Standard: function(element) { })
+* internalCss: Determines if internal css should be used at all (Standard: true)
+
 #### Options
 
  * *datasource*: The location of your meta data file
