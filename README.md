@@ -11,12 +11,12 @@ To use IcebearJS properly you have to include it. Put the following line in your
 <script type="text/javascript" src="http://dev.my-reality.de/jquery/icebearjs/1.1/jquery.icebearjs.min.js"></script>
 ```
 
-Afterwards you can use supported IcebearJS.
+Afterwards you can use supported IcebearJS. To have a basic understanding about what IcebearJS does, [take a look at the demo](http://dev.my-reality.de/jquery/icebearjs/demo/).
 
 Metadata
 ===
 
-This plugin generates jQuery UI elements which base on JQueryUI. You have to define a jsonp source in a repository first, in the following example a basic ```meta.json``` file:
+This plugin generates HTML elements which base on JQueryUI. You can define a json source in a repository first, in the following example a basic ```meta.json``` file, which should match the following structure:
 
 ```json
 {
@@ -89,7 +89,7 @@ This plugin generates jQuery UI elements which base on JQueryUI. You have to def
 }
 ```
 
-It is very important to put the data in a response object to work with json. 
+You can use another json source, it is only important to have the upper structure provided.
 
 ### Reading from remote
 
