@@ -136,7 +136,7 @@ $('#progress').icebearProgress({
 ```
 That's all! Now you can view a full working, animated progress bar which displays the current development status of your game. Additionally you can style it with CSS to improve appeareance.
 
-#### Attributes
+#### Options
 
 There are more than the datasource attribute to configure:
 
@@ -147,16 +147,6 @@ There are more than the datasource attribute to configure:
 * onLeavePhase: Event function which is called on phase leaving (Standard: function(element) { })
 * onEnterPhase: Event function which is called on phase entering (Standard: function(element) { })
 * internalCss: Determines if internal css should be used at all (Standard: true)
-
-#### Options
-
- * *datasource*: The location of your meta data file
- * *animated*: Turns the animations on or off
- * *animationType*: jQuery animation type
- * *duration*: Duration of the animation
- * *onEnterPhase*: listener function which is called when a new phase is entered
- * *onLeavePhase*: listener function which is called when a phase has been leaved
- * *internalCss*: Disable for custom css positioning
 
 ### icebearPatch
 
