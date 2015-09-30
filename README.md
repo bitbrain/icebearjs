@@ -134,7 +134,7 @@ $('#progress').icebearProgress({
 });
 </script>
 ```
-That's all! Now you can view a full working, animated progress bar which displays the current development status of your game. Additionally you can style it with CSS to improve appeareance.
+That's all! Now you can view a full working, animated progress bar which displays the current development status of your game. Additionally you can style it with CSS to improve appearance.
 
 #### Options
 
