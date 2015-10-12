@@ -737,7 +737,11 @@ initJQuery();
             var defaults = {
                 datasource: "meta.json",
                 version: true,
-                description: true
+                description: true,
+                prependedTextAdded: "",
+                prependedTextModified: "",
+                prependedTextRemoved: "",
+                showBullets: true
             };
 
             options = $.extend(true, {}, defaults, options);
@@ -758,12 +762,34 @@ initJQuery();
 
                 var info = '<div class="category">' + data.caption + '</div>';
 
-                info += "<ul>";
+                if (options.showBullets)
+                {
+                    info += "<ul>";
+                }
+                else
+                {
+                    info += '<ul style="list-style: none;">';
+                }
 
                 for (var i = 0; i < data.content.length; ++i) {
                     var element = data.content[i];
 
-                    info += '<li class="' + element.type + '">' + element.description + '</li>';
+                    if (element.type === "added")
+                    {
+                        info += '<li class="' + element.type + '">' + options.prependedTextAdded + element.description + '</li>';
+                    }
+                    else if(element.type === "modified")
+                    {
+                        info += '<li class="' + element.type + '">' + options.prependedTextModified + element.description + '</li>';
+                    }
+                    else if(element.type === "removed")
+                    {
+                        info += '<li class="' + element.type + '">' + options.prependedTextRemoved + element.description + '</li>';
+                    }
+                    else
+                    {
+                        info += '<li class="' + element.type + '">' + element.description + '</li>';
+                    }
                 }
 
                 info += '</ul>';
